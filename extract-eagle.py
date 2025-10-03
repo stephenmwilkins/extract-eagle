@@ -28,6 +28,24 @@ for snapshot in snapshots:
 
     print(f"{snapshot} {N}")
 
+
+    # get quantities
+
+    sfr_list = []
+    stellar_mass_list = []
+    bh_mass_list = []
+
+    for i in range(N):
+
+        filename = f'{subfind_snapshot_dir}/groups_{snapshot}/eagle_subfind_tab_{snapshot}.{i}.hdf5'
+
+        with h5py.File(filename) as hf:
+
+            bh_mass_list.append(hf['Subhalo/ApertureMeasurements/Mass/030kpc'][:,4])
+            stellar_mass_list.append(hf['Subhalo/ApertureMeasurements/Mass/030kpc'][:,3])
+            sfr_list.append(hf['Subhalo/ApertureMeasurements/SFR/030kpc'][:])
+
+
     # get lines
     intrinsic_line_luminosities_list = {line: [] for line in lines}
     los_line_luminosities_list = {line: [] for line in lines}
@@ -48,6 +66,10 @@ for snapshot in snapshots:
 
 
     with h5py.File(f'outputs/{snapshot}.h5', 'w') as hf:
+
+        hf[f'mstar'] = np.concatenate(stellar_mass_list)
+        hf[f'mbh'] = np.concatenate(bh_mass_list)
+        hf[f'sfr'] = np.concatenate(sfr_list)
 
         for line in lines:
 
