@@ -19,8 +19,6 @@ for snapshot in snapshots:
 
     # determine 
 
-    subfind_snapshot_dir = f'{subfind_dir}/groups_{snapshot}'
-
     folder = Path(f'{synthesizer_dir}{snapshot}')
 
     # Count only files
@@ -37,7 +35,7 @@ for snapshot in snapshots:
 
     for i in range(N):
 
-        filename = f'{subfind_snapshot_dir}/groups_{snapshot}/eagle_subfind_tab_{snapshot}.{i}.hdf5'
+        filename = f'{subfind_dir}/groups_{snapshot}/eagle_subfind_tab_{snapshot}.{i}.hdf5'
 
         with h5py.File(filename) as hf:
 
