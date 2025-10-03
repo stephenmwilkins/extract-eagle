@@ -51,9 +51,9 @@ for snapshot in snapshots:
 
         for line in lines:
 
-            hf['lines']['intrinsic'][line]['Luminosities'] = np.concatenate(intrinsic_line_luminosities_list[line])
-            hf['lines']['los'][line]['Luminosities'] = np.concatenate(losline_luminosities_list[line])
+            hf[f'lines/intrinsic/{line}/Luminosities'] = np.concatenate(intrinsic_line_luminosities_list[line])
+            hf[f'lines/los/{line}/Luminosities'] = np.concatenate(los_line_luminosities_list[line])
 
-            hf['lines']['intrinsic'][line]['EWs'] = np.concatenate(intrinsic_line_ews_list[line])
-            hf['lines']['los'][line]['EWs'] = np.concatenate(los_line_ews_list[line])
+            hf[f'lines/intrinsic/{line}/EWs'] = np.concatenate(intrinsic_line_ews_list[line])
+            hf[f'lines/los/{line}/EWs'] = np.concatenate(los_line_ews_list[line])
 
