@@ -84,9 +84,9 @@ for snapshot in snapshots:
 
             for line in lines:
                 intrinsic_line_luminosities_list[line].append(hf[f'Lines/intrinsic/{line}/Luminosities'][:])
-                los_line_luminosities_list[line].append(hf[f'Lines/intrinsic/{line}/Luminosities'][:])
+                los_line_luminosities_list[line].append(hf[f'Lines/los/{line}/Luminosities'][:])
                 intrinsic_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EWs'][:])
-                los_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EWs'][:])
+                los_line_ews_list[line].append(hf[f'Lines/los/{line}/EWs'][:])
 
 
     with h5py.File(f'outputs/{snapshot}.h5', 'w') as hf:
