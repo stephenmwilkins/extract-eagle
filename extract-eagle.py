@@ -36,7 +36,7 @@ for snapshot in snapshots:
 
     for i in range(N):
 
-        filename = f'{synthesizer_dir}/photometry_{snapshot}/eagle_subfind_photometry_{snapshot}.{i}.hdf5'
+        filename = f'{synthesizer_dir}{snapshot}/eagle_subfind_photometry_{snapshot}.{i}.hdf5'
 
         with h5py.File(filename) as hf:
 
