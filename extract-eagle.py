@@ -46,18 +46,14 @@ for snapshot in snapshots:
                 intrinsic_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EWs'][:])
                 los_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EWs'][:])
 
-    intrinsic_line_luminosities = {}
-    los_line_luminosities = {}
-    intrinsic_line_ews = {}
-    los_line_ews = {}
 
-    for line in lines:
-        intrinsic_line_luminosities[line] = np.concatenate(intrinsic_line_luminosities_list[list])
-        los_line_luminosities[line] = np.concatenate(los_line_luminosities_list[list])
-        intrinsic_line_ews[line] = np.concatenate(intrinsic_line_ews_list[list])
-        los_line_ews[line] = np.concatenate(los_line_ews_list[list])
+    with h5py.File(f'outputs/{snapshot}.h5', 'w'):
 
-    print(los_line_ews[line].shape)
+        for line in lines:
 
+            hf['lines']['intrinsic'][line]['Luminosities'] = np.concatenate(intrinsic_line_luminosities_list[line])
+            hf['lines']['los'][line]['Luminosities'] = np.concatenate(losline_luminosities_list[line])
 
+            hf['lines']['intrinsic'][line]['EWs'] = np.concatenate(intrinsic_line_ews_list[line])
+            hf['lines']['los'][line]['EWs'] = np.concatenate(los_line_ews_list[line])
 
