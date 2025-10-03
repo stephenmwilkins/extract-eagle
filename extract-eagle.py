@@ -43,8 +43,8 @@ for snapshot in snapshots:
             for line in lines:
                 intrinsic_line_luminosities_list[line].append(hf[f'Lines/intrinsic/{line}/Luminosities'][:])
                 los_line_luminosities_list[line].append(hf[f'Lines/intrinsic/{line}/Luminosities'][:])
-                intrinsic_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EW'][:])
-                los_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EW'][:])
+                intrinsic_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EWs'][:])
+                los_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EWs'][:])
 
     intrinsic_line_luminosities = {}
     los_line_luminosities = {}
