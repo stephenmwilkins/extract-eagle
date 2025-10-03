@@ -21,7 +21,7 @@ for snapshot in snapshots:
 
     subfind_snapshot_dir = f'{subfind_dir}/groups_{snapshot}'
 
-    folder = Path(subfind_snapshot_dir)
+    folder = Path(f'{synthesizer_dir}{snapshot}')
 
     # Count only files
     N = sum(1 for f in folder.iterdir() if f.is_file())
