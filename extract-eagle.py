@@ -12,7 +12,7 @@ subfind_dir = '/cosma7/data/Eagle/ScienceRuns/Planck1/L0100N1504/PE/REFERENCE/da
 
 snapshots = ['008_z005p037']
 
-lines = ['H 1 6562.80A']
+lines = ['H 1 6562.80A', 'H 1 4861.32A', 'H 1 1.87510m']
 
 
 for snapshot in snapshots:
@@ -28,24 +28,36 @@ for snapshot in snapshots:
 
     print(f"Number of files: {N}")
 
+    # get lines
+    intrinsic_line_luminosities_list = {line: [] for line in lines}
+    los_line_luminosities_list = {line: [] for line in lines}
+    intrinsic_line_ews_list = {line: [] for line in lines}
+    los_line_ews_list = {line: [] for line in lines}
 
-    # arr_list = []
+    for i in range(N):
 
-    # for i in range(N):
+        filename = f'{synthesizer_dir}/photometry_{snapshot}/eagle_subfind_photometry_{snapshot}.{i}.hdf5'
 
-    #     filename = f'{base_data_dir}/photometry_{snapshot}/eagle_subfind_photometry_{snapshot}.{i}.hdf5'
+        with h5py.File(filename) as hf:
 
-    #     with h5py.File(filename) as hf:
+            for line in lines:
+                intrinsic_line_luminosities_list[line].append(hf[f'Lines/intrinsic/{line}/Luminosities'][:])
+                los_line_luminosities_list[line].append(hf[f'Lines/intrinsic/{line}/Luminosities'][:])
+                intrinsic_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EW'][:])
+                los_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EW'][:])
 
-    #         # hf.visit(print)
+    intrinsic_line_luminosities = {}
+    los_line_luminosities = {}
+    intrinsic_line_ews = {}
+    los_line_ews = {}
 
-    #         arr_list.append(hf[f'Lines/intrinsic/{line}/Luminosities'][:])
+    for line in lines:
+        intrinsic_line_luminosities[line] = np.concatenate(intrinsic_line_luminosities_list[list])
+        los_line_luminosities[line] = np.concatenate(los_line_luminosities_list[list])
+        intrinsic_line_ews[line] = np.concatenate(intrinsic_line_ews_list[list])
+        los_line_ews[line] = np.concatenate(los_line_ews_list[list])
 
-
-    # Ha = np.concatenate(arr_list)
-    # print(Ha.shape)
-
-
+    print(los_line_ews[line].shape)
 
 
 
