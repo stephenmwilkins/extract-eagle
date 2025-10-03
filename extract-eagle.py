@@ -19,14 +19,14 @@ for snapshot in snapshots:
 
     # determine 
 
-    subfind_snapshot_dir = f'{subfind_dir}/{snapshot}'
+    subfind_snapshot_dir = f'{subfind_dir}/groups_{snapshot}'
 
     folder = Path(subfind_snapshot_dir)
 
     # Count only files
     N = sum(1 for f in folder.iterdir() if f.is_file())
 
-    print(f"Number of files: {num_files}")
+    print(f"Number of files: {N}")
 
 
     # arr_list = []
