@@ -11,9 +11,7 @@ subfind_dir = '/cosma7/data/Eagle/ScienceRuns/Planck1/L0100N1504/PE/REFERENCE/da
 
 
 snapshots = [
-    '000_z020p000',
-    # '001_z015p132',
-    # '002_z009p993',
+    '002_z009p993',
     # '003_z008p988',
     # '004_z008p075',
     # '005_z007p050',
