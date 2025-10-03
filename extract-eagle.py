@@ -26,7 +26,7 @@ for snapshot in snapshots:
     # Count only files
     N = sum(1 for f in folder.iterdir() if f.is_file())
 
-    print(f"Number of files: {N}")
+    print(f"{snapshot} {N}")
 
     # get lines
     intrinsic_line_luminosities_list = {line: [] for line in lines}
@@ -47,7 +47,7 @@ for snapshot in snapshots:
                 los_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EWs'][:])
 
 
-    with h5py.File(f'outputs/{snapshot}.h5', 'w'):
+    with h5py.File(f'outputs/{snapshot}.h5', 'w') as hf:
 
         for line in lines:
 
