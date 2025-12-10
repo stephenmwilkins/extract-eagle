@@ -30,4 +30,4 @@ with h5py.File(filename) as hf:
 
     hf.visit(print)
 
-    print(hf['Galaxies/Lines/IDs'])
+    print(hf['Galaxies/Lines/IDs'][:])
