@@ -46,8 +46,6 @@ snapshots = [
     # '028_z000p000',
     ]
 
-lines = ['H 1 6562.80A', 'H 1 4861.32A', 'H 1 1.87510m']
-
 
 for snapshot in snapshots:
 
@@ -77,10 +75,10 @@ for snapshot in snapshots:
 
 
     # get lines
-    intrinsic_line_luminosities_list = {line: [] for line in lines}
-    los_line_luminosities_list = {line: [] for line in lines}
-    intrinsic_line_ews_list = {line: [] for line in lines}
-    los_line_ews_list = {line: [] for line in lines}
+    line_luminosities_reprocessed = []
+    line_luminosities_total = []
+
+
 
     for i in range(N):
 
@@ -88,11 +86,12 @@ for snapshot in snapshots:
 
         with h5py.File(filename) as hf:
 
-            for line in lines:
-                intrinsic_line_luminosities_list[line].append(hf[f'Lines/intrinsic/{line}/Luminosities'][:])
-                los_line_luminosities_list[line].append(hf[f'Lines/los/{line}/Luminosities'][:])
-                intrinsic_line_ews_list[line].append(hf[f'Lines/intrinsic/{line}/EWs'][:])
-                los_line_ews_list[line].append(hf[f'Lines/los/{line}/EWs'][:])
+            if i == 0:
+                line_ids = hf['Galaxies/Lines/IDs'][:]
+
+            line_luminosities_reprocessed.append(hf[f'Galaxies/Stars/Lines/Luminosity/stellar_reprocessed'][:])
+            line_luminosities_total.append(hf[f'Galaxies/Stars/Lines/Luminosity/stellar_total'][:])
+
 
 
     with h5py.File(f'outputs/{snapshot}.h5', 'w') as hf:
@@ -101,11 +100,8 @@ for snapshot in snapshots:
         hf[f'mbh'] = np.concatenate(bh_mass_list)
         hf[f'sfr'] = np.concatenate(sfr_list)
 
-        for line in lines:
+        hf[f'lines/reprocessed/Luminosities'] = np.concatenate(line_luminosities_reprocessed)
+        hf[f'lines/total/Luminosities'] = np.concatenate(line_luminosities_total)
 
-            hf[f'lines/intrinsic/{line}/Luminosities'] = np.concatenate(intrinsic_line_luminosities_list[line])
-            hf[f'lines/los/{line}/Luminosities'] = np.concatenate(los_line_luminosities_list[line])
 
-            hf[f'lines/intrinsic/{line}/EWs'] = np.concatenate(intrinsic_line_ews_list[line])
-            hf[f'lines/los/{line}/EWs'] = np.concatenate(los_line_ews_list[line])
 
