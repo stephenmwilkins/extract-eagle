@@ -92,7 +92,7 @@ for snapshot in snapshots:
             line_luminosities_reprocessed.append(hf[f'Galaxies/Stars/Lines/Luminosity/stellar_reprocessed'][:])
             line_luminosities_total.append(hf[f'Galaxies/Stars/Lines/Luminosity/stellar_total'][:])
 
-
+    print(line_ids)
 
     with h5py.File(f'outputs/{snapshot}.h5', 'w') as hf:
 
@@ -100,6 +100,7 @@ for snapshot in snapshots:
         hf[f'mbh'] = np.concatenate(bh_mass_list)
         hf[f'sfr'] = np.concatenate(sfr_list)
 
+        hf[f'lines/ids'] = line_ids
         hf[f'lines/reprocessed/Luminosities'] = np.concatenate(line_luminosities_reprocessed)
         hf[f'lines/total/Luminosities'] = np.concatenate(line_luminosities_total)
 
