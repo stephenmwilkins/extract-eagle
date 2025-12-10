@@ -29,4 +29,5 @@ filename = f'{synthesizer_dir}{snapshot}/eagle_subfind_photometry_{snapshot}.0.h
 with h5py.File(filename) as hf:
 
     hf.visit(print)
-          
+
+    print(hf['Galaxies/Lines/IDs'])
