@@ -57,27 +57,27 @@ for snapshot in snapshots:
     N = sum(1 for f in folder.iterdir() if f.is_file())
     print(f"{snapshot} {N}")
 
-    # get quantities
+    # # get quantities
 
-    sfr_list = []
-    stellar_mass_list = []
-    bh_mass_list = []
+    # sfr_list = []
+    # stellar_mass_list = []
+    # bh_mass_list = []
 
-    for i in range(N):
+    # for i in range(N):
 
-        filename = f'{subfind_dir}/groups_{snapshot}/eagle_subfind_tab_{snapshot}.{i}.hdf5'
+    #     filename = f'{subfind_dir}/groups_{snapshot}/eagle_subfind_tab_{snapshot}.{i}.hdf5'
 
-        with h5py.File(filename) as hf:
+    #     with h5py.File(filename) as hf:
 
-            bh_mass_list.append(hf['Subhalo/ApertureMeasurements/Mass/030kpc'][:,5])
-            stellar_mass_list.append(hf['Subhalo/ApertureMeasurements/Mass/030kpc'][:,4])
-            sfr_list.append(hf['Subhalo/ApertureMeasurements/SFR/030kpc'][:])
+    #         bh_mass_list.append(hf['Subhalo/ApertureMeasurements/Mass/030kpc'][:,5])
+    #         stellar_mass_list.append(hf['Subhalo/ApertureMeasurements/Mass/030kpc'][:,4])
+    #         sfr_list.append(hf['Subhalo/ApertureMeasurements/SFR/030kpc'][:])
 
 
     # get lines
     line_luminosities_reprocessed = []
     line_luminosities_total = []
-
+    stellar_masses = []
 
 
     for i in range(N):
@@ -89,16 +89,17 @@ for snapshot in snapshots:
             if i == 0:
                 line_ids = hf['Galaxies/Lines/IDs'][:]
 
+            stellar_masses.append(hf[f'Galaxies/Mstar'][:])
             line_luminosities_reprocessed.append(hf[f'Galaxies/Stars/Lines/Luminosity/stellar_reprocessed'][:])
             line_luminosities_total.append(hf[f'Galaxies/Stars/Lines/Luminosity/stellar_total'][:])
 
-    print(line_ids)
+    # print(line_ids)
 
     with h5py.File(f'outputs/{snapshot}.h5', 'w') as hf:
 
-        hf[f'mstar'] = np.concatenate(stellar_mass_list)
-        hf[f'mbh'] = np.concatenate(bh_mass_list)
-        hf[f'sfr'] = np.concatenate(sfr_list)
+        hf[f'mstar'] = np.concatenate(stellar_masses)
+        # hf[f'mbh'] = np.concatenate(bh_mass_list)
+        # hf[f'sfr'] = np.concatenate(sfr_list)
 
         hf[f'lines/ids'] = line_ids
         hf[f'lines/reprocessed/Luminosities'] = np.concatenate(line_luminosities_reprocessed)
