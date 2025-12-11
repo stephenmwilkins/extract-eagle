@@ -17,7 +17,7 @@ subfind_dir = '/cosma7/data/Eagle/ScienceRuns/Planck1/L0100N1504/PE/REFERENCE/da
 
 
 snapshots = [
-    # '002_z009p993',
+    '002_z009p993',
     '003_z008p988',
     '004_z008p075',
     '005_z007p050',
@@ -77,6 +77,8 @@ for snapshot in snapshots:
     # get lines
     line_luminosities_reprocessed = []
     line_luminosities_total = []
+    continuum_reprocessed = []
+    continuum_total = []
     stellar_masses = []
 
 
@@ -88,10 +90,13 @@ for snapshot in snapshots:
 
             if i == 0:
                 line_ids = hf['Galaxies/Lines/IDs'][:]
+                line_wavelengths = hf['Galaxies/Lines/Wavelengths'][:]
 
             stellar_masses.append(hf[f'Galaxies/Mstar'][:])
             line_luminosities_reprocessed.append(hf[f'Galaxies/Stars/Lines/Luminosity/stellar_reprocessed'][:])
             line_luminosities_total.append(hf[f'Galaxies/Stars/Lines/Luminosity/stellar_total'][:])
+            continuum_reprocessed.append(hf[f'Galaxies/Stars/Lines/Continuum/stellar_reprocessed'][:])
+            continuum_total.append(hf[f'Galaxies/Stars/Lines/Continuum/stellar_total'][:])
 
     # print(line_ids)
 
@@ -102,8 +107,10 @@ for snapshot in snapshots:
         # hf[f'sfr'] = np.concatenate(sfr_list)
 
         hf[f'lines/ids'] = line_ids
+        hf[f'lines/Wavelengths'] = line_wavelengths
         hf[f'lines/reprocessed/Luminosities'] = np.concatenate(line_luminosities_reprocessed)
         hf[f'lines/total/Luminosities'] = np.concatenate(line_luminosities_total)
-
+        hf[f'lines/reprocessed/Continuum'] = np.concatenate(continuum_reprocessed)
+        hf[f'lines/total/Continuum'] = np.concatenate(continuum_total)
 
 
